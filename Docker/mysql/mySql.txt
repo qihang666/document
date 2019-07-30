@@ -1,0 +1,58 @@
+﻿docker run --name mysql -v /home/docker:/home/docker -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5
+ 
+docker create --name mysql1 -v /home/docker/mysqldata:/var/lib/mysql -v /home/docker/mysqldata/config:/etc/mysql/conf.d  -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5
+ 
+
+ 
+docker run --name mysql1 -v /home/docker/:/home/docker/  -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+ 
+docker exec -it mysql bash
+ 
+备份
+docker exec mysql  mysqldump -uroot -proot cms > cms.sql;
+
+docker exec mysql mysql -uroot -proot -e "source /docker/work/mysql/cms.sql"
+
+
+ docker run --name mysql -v /docker/work:/docker/work -p 3308:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5
+
+
+ docker run --name mysql5.5 -v /home/docker/:/home/docker/  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.5 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+ docker run --name mysql8.0 -v /etc/timezone:/etc/timezone -v /etc/localtime:/etc/localtime  -p 3306:3306  -e MYSQL_ROOT_PASSWORD=root -d mysql8.0 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+//导出数据库
+docker exec mysql mysqldump -uroot -proot a > a.sql
+//导入数据库
+
+
+
+docker exec -it mysql bash 
+mysql -uroot -proot
+
+
+我的mysql版本是8.0的版本，因为毕竟新的mysql采用新的保密方式，所以就的似乎不能用，改密码方式：
+
+用管理员身份打开cmd
+
+
+mysql -uroot -proot（输入密码）            进入mysql执行下面三个命令
+
+
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '你的密码';
+
+
+docker exec -it mysql8.0 bash
+mysql -uroot -proot
+use mysql；
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+FLUSH PRIVILEGES;
+
+
+
+
+docker run --name mysql8.0 -p 3306:3306  -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+
+docker run --name mysql8.0 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root  -e TZ=Asia/Shanghai -d mysql:8.0 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-time_zone='+8:00'

@@ -1,0 +1,22 @@
+docker run -p 80:80 --name nginx \
+ -v /home/docker/html:/usr/share/nginx/html \
+ -v /home/docker/conf.d:/etc/nginx/conf.d \
+ -d nginx:latest
+ 
+
+docker stop nginx
+
+docker rm nginx
+
+ docker run -p 80:80 --name nginx \
+ -v /nginx/html:/usr/share/nginx/html \
+ -v /cms:/cms \
+ -v /nginx/conf.d:/etc/nginx/conf.d \
+ -d nginx:latest
+ 
+  docker run -p 2300:80 --name nginx \
+ -v /nginx/html:/usr/share/nginx/html \
+ -v /nginx/conf.d:/etc/nginx/conf.d \
+ -d nginx:latest
+ 
+ 
